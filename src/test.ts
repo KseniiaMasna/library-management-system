@@ -1,4 +1,5 @@
-import { createBook, borrowBook, returnBook, addRating, getBookStats } from "./app";
+import { nanoid } from "nanoid";
+import { createBook, borrowBook, returnBook, addRating, getBookStats } from "./app.js";
 import { Rating } from "./types";
 
 
@@ -6,7 +7,7 @@ import { Rating } from "./types";
 const exampleUser = {
     name: "John Doe",
     phoneNumber: 1234567890,
-    id: 1
+    id: nanoid()
 }
 const exampleBook = createBook("Become Elisabeth Elliot", "Elisabeth Elliot", 1999, "Biography")
 const exampleRatingNumber: Rating = 5
@@ -19,7 +20,7 @@ addRating(exampleBook, exampleRating)
 console.log(exampleBook.ratings)
 
 const exampleBookStats = getBookStats(exampleBook)
-console.log(exampleBookStats)
+console.log(exampleBook)
 
 
 

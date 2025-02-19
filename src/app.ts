@@ -1,13 +1,15 @@
+import { nanoid } from 'nanoid'
 import { User, RatingRecord, BookStats, Book, Title, Name, Date, Genre, isAvailable } from "./types";
 
 
 //TODO: Rewrite this function with Omit utility and obj destructuring
-const createBook = (title: Title, author: Name, publishYear: Date, genre: Genre = 'Other'): Book => {
+const createBook = (title: Title, author: Name, publishYear: Date, genre: Genre ='Other'): Book => {
     return {
+        id: nanoid(),
         title,
         author,
         publishYear,
-        genre,
+        genre: genre,
         isAvailable: true,
         borrowHistory: [],
         ratings: []
@@ -15,7 +17,7 @@ const createBook = (title: Title, author: Name, publishYear: Date, genre: Genre 
 };
 
 const borrowBook = (book: Book, borrower: User ,date: Date): isAvailable => {
-    !book.isAvailable && false
+    !book.isAvailable ? false :
     
     book.isAvailable = false
     book.borrowHistory.push({
@@ -39,7 +41,7 @@ const returnBook = (book: Book, date: Date): isAvailable => {
 
 const addRating = (book: Book, rating: Omit<RatingRecord, 'date'>): boolean => {
     const isBookExist = true
-    !isBookExist && false
+    !isBookExist ? false :
 
     book.ratings.push({
         ...rating,
@@ -49,9 +51,10 @@ const addRating = (book: Book, rating: Omit<RatingRecord, 'date'>): boolean => {
 }
 
 const getBookStats = (book:Book):BookStats => {
-    const totalRatings = book.ratings.length
-    //const allRatingsNumbers = book.ratings.map(ratingRecord => ratingRecord.rating)
-    const averageRating = book.ratings.reduce((sum, ratingRecord) => sum + ratingRecord.rating, 0) /totalRatings
+    const totalRatings = book.ratings.length    
+    const averageRating = totalRatings > 0 
+        ? book.ratings.reduce((sum, ratingRecord) => sum + ratingRecord.rating, 0) /totalRatings
+        : 0
     const totalBorrows = book.borrowHistory.length
         
     return {

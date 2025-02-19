@@ -1,5 +1,10 @@
 {
+  "type": "module",
+  
   "devDependencies": {
     "prettier": "^3.5.1"
+  },
+  "dependencies": {
+    "nanoid": "^5.1.0"
   }
 }

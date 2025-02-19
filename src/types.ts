@@ -9,11 +9,12 @@ export type isAvailable = boolean
 export type Rating = 1 | 2 | 3 | 4 | 5
 
 export interface User {
+    readonly id: string
     name: Name
     phoneNumber: PhoneNumber
-    id: number
 }
 export interface Book {
+    readonly id: string 
     title: Title,
     author: Name,
     publishYear: Date,
