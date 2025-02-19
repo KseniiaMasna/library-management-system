@@ -1,3 +1,49 @@
+export type Title = string
+export type Name = string
+export type PublishYear = number
+export type Genre = FictionGenre | NonFictionGenre | AcademicGenre | Other
+export type PhoneNumber = number
+export type Date = number | string
+export type isAvailable = boolean
+
+export type Rating = 1 | 2 | 3 | 4 | 5
+
+export interface User {
+    name: Name
+    phoneNumber: PhoneNumber
+    id: number
+}
+export interface Book {
+    title: Title,
+    author: Name,
+    publishYear: Date,
+    genre: Genre,
+    isAvailable: isAvailable,
+    borrowHistory: BorrowRecord[],
+    ratings: RatingRecord[]
+}
+
+export interface BorrowRecord {
+    borrow: User
+    borrowDate: Date
+    returnDate?: Date | null
+}
+
+export interface RatingRecord {
+    user: User
+    rating: Rating
+    review?: string
+    date: Date
+}
+
+export interface BookStats {
+    totalRatings: number
+    averageRating: Rating | number
+    totalBorrows: number
+}
+
+
+//Unions for genre property
 type FictionGenre =
     | "Fantasy"
     | "Science Fiction"
@@ -13,6 +59,7 @@ type FictionGenre =
 type NonFictionGenre =
     | "Biography"
     | "History"
+    | "Christianity"
     | "Science"
     | "Philosophy"
     | "Self Help"
@@ -20,7 +67,7 @@ type NonFictionGenre =
     | "Technology"
     | "Politics"
     | "Travel"
-    | "Cooking";
+    | "Cooking"
 
 type AcademicGenre =
     | "Textbook"
@@ -31,4 +78,3 @@ type AcademicGenre =
 
 type Other = 'Other'
 
-export {FictionGenre, NonFictionGenre, AcademicGenre, Other}

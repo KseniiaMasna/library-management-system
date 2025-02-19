@@ -1,44 +1,7 @@
-import { FictionGenre, NonFictionGenre, AcademicGenre, Other } from "./types"
-
-type Title = string
-type Name = string
-type PublishYear = number
-type Genre = FictionGenre | NonFictionGenre | AcademicGenre | Other
-type PhoneNumber = number
-type Date = number
-type isAvailable = boolean
-
-interface User {
-    name: Name
-    phoneNumber: PhoneNumber
-    id: number
-}
-interface Book {
-    title: Title,
-    author: Name,
-    publishYear: Date,
-    genre: Genre,
-    isAvailable: isAvailable,
-    borrowHistory: BorrowRecord[],
-    ratings: RatingRecord[]
-}
-
-interface BorrowRecord {
-    borrow: User
-    borrowDate: Date
-    returnDate?: Date | null
-}
-
-interface RatingRecord {
-    user: User
-    rating: 1 | 2 | 3 | 4 | 5
-    review?: string
-}
+import { User, RatingRecord, BookStats, Book, Title, Name, Date, Genre, isAvailable } from "./types";
 
 
-
-
-//Rewrite this function with Omit utility and obj destructuring
+//TODO: Rewrite this function with Omit utility and obj destructuring
 const createBook = (title: Title, author: Name, publishYear: Date, genre: Genre = 'Other'): Book => {
     return {
         title,
@@ -61,19 +24,43 @@ const borrowBook = (book: Book, borrower: User ,date: Date): isAvailable => {
         returnDate: null
     })
     return true
-
-
 }
 
 const returnBook = (book: Book, date: Date): isAvailable => {
     book.isAvailable && false 
 
     book.isAvailable = true
-                const currentBorrow = book.borrowHistory[book.borrowHistory.length - 1];
+    const currentBorrow = book.borrowHistory[book.borrowHistory.length - 1];
     currentBorrow.returnDate = date;
-            return true
+        return true;
 }
 
-const addRating = (book: Book, rating : RatingRecord) => void{
-    book.ratings.push(rating)
+
+
+const addRating = (book: Book, rating: Omit<RatingRecord, 'date'>): boolean => {
+    const isBookExist = true
+    !isBookExist && false
+
+    book.ratings.push({
+        ...rating,
+        date: new Date().toISOString() as unknown as Date
+    });
+    return true
 }
+
+const getBookStats = (book:Book):BookStats => {
+    const totalRatings = book.ratings.length
+    //const allRatingsNumbers = book.ratings.map(ratingRecord => ratingRecord.rating)
+    const averageRating = book.ratings.reduce((sum, ratingRecord) => sum + ratingRecord.rating, 0) /totalRatings
+    const totalBorrows = book.borrowHistory.length
+        
+    return {
+        totalRatings,
+        averageRating,
+        totalBorrows
+    }
+}
+
+export { createBook, borrowBook, returnBook, addRating, getBookStats };
+
+
